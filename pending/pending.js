@@ -1,4 +1,4 @@
-var database = require('../databaseSetup.js');
+var dbConnection = require('../databaseSetup.js');
 
 module.exports.getPending = function(request, response){
   var userId = request.body.userId;
