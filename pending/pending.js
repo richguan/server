@@ -16,9 +16,15 @@ module.exports.sendVote = function(req, res){
 
   //look up the contents table with the contentId 
   // if the vote is 1, store 1 in yes, if the vote is -1, store 1 in no, if no, end the response
-  vote === 1 && saveYes(contentId, res);
-  vote === -1 && saveNo(contentId, res);
-  vote === 0 && res.end();
+  if( vote === 1 ){
+    saveYes(contentId, res);
+  }
+  if( vote === -1 ){
+    saveNo(contentId, res);
+  }
+  if( vote === 0 ){
+    res.end();
+  }
 
   //delete connection in receivers table
   deleteFromReceivers(userId, contentId);
