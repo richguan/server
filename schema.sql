@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS pictures;
 
 CREATE TABLE pictures (
   pictureId INTEGER NULL AUTO_INCREMENT,
-  data TEXT NULL DEFAULT NULL, --if text doesnot work, use mediumtext 
+  data TEXT NULL DEFAULT NULL,
   PRIMARY KEY (pictureId)
 );
 
