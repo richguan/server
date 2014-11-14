@@ -16,13 +16,13 @@ module.exports.sendVote = function(req, res){
 
   //look up the contents table with the contentId 
   // if the vote is 1, store 1 in yes, if the vote is -1, store 1 in no, if no, end the response
-  if( vote === 1 ){
+  if(vote === 1){
     saveYes(contentId, res);
   }
-  if( vote === -1 ){
+  if(vote === -1){
     saveNo(contentId, res);
   }
-  if( vote === 0 ){
+  if(vote === 0){
     res.end();
   }
 
@@ -47,7 +47,7 @@ var getPendingConents = function(userId, res){
 var saveYes = function(contentId, res){
   console.log('receive yes on ' + contentId );
   dbConnection.query("UPDATE contents SET yes = yes+1 WHERE contentId = '" + contentId +"';", function(error) {
-    if(error){  res.send(error); }
+    if(error){ res.send(error); }
   });
   res.end();
 };
@@ -55,7 +55,7 @@ var saveYes = function(contentId, res){
 var saveNo = function(contentId, res){
   console.log('receive no on ' + contentId );
   dbConnection.query("UPDATE contents SET no = no+1 WHERE contentId = '" + contentId +"';", function(error) {
-    if(error){  response.send(error); }
+    if(error){ res.send(error); }
   });
   res.end();
 };
