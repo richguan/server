@@ -6,9 +6,9 @@ var mysql = require('mysql')
 module.exports.getResults = function(request, response){
   //*** still need to check if userId gets accessed ***
   var userId = request.body.userId;
-  var userId = 10
-  console.log(request, "REQUEST")
-  console.log(response, "what is the response in getResults")
+  // var userId = 10
+  // console.log(request, "REQUEST")
+  // console.log(response, "what is the response in getResults")
   //Query used to access mySQL tables
   var query = 'select contents.userid, users.username, contents.topic, contents.yes, contents.no, pictures.data from contents join users on contents.userId = users.userId and users.userId='+ userId + ' join pictures on contents.pictureId = pictures.pictureId';
   
