@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Neco-Murphy/server",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.9.2",
     "express": "^4.10.2",
     "mysql": "^2.5.3"
   }
