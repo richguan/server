@@ -6,6 +6,12 @@ var crypto = require('crypto');
 //===============EXPORT FUNCTIONS=====================
 
 module.exports.login = function(req, res){
+  //receive username and password
+  //retrieve the hashed password and userId from users table with the given username
+  //if there is no match, send error back
+  //if there is, compare the given password and the saved hash.
+  //if it does not match, send error back
+  //if it does, create a token and send it back with the userId, also save the token in the users table 
 	var username = req.body.username;
 	var password = req.body.password;
 
@@ -47,6 +53,13 @@ module.exports.login = function(req, res){
 };
 
 module.exports.signup = function(req, res){
+  //receive username, password, phone and email 
+  //check if the username, phone and/or email already exist
+  //if so, send error back
+  //if no, hash the given password and save the info in users table
+  //get userId from the users table
+  //create a token and send it back with the userId
+  //save the token
 	var username = req.body.username;
   var password = req.body.password;
   // var phone = req.body.phone;
@@ -73,7 +86,7 @@ module.exports.signup = function(req, res){
   					//get the userId from newly inserted row in users table
   					console.log('saved the user');
   					getUserId(username, function(error, rows){
-  						if(error){ res.send( { 'error':'could not save the user info.'} ) }
+  						if(error){ res.send( { 'error':'could retrieve the user information.'} ) }
   						var userId = rows[0].userId;
   					  //make token and send it back to user
 	  					createToken(function(token){
