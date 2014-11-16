@@ -4,10 +4,10 @@ var dbConnection;
 
 if (process.env.NODE_ENV === 'production') {
   dbConnection = mysql.createConnection({
-    host: "====================.cloudapp.net",
-    user: "====================",
-    password: "====================",
-    database: "===================="
+    host: "us-cdbr-azure-west-a.cloudapp.net",
+    user: "bffa2351040f6c",
+    password: "8d1c5b26a",
+    database: "thesisdb"
   });
 } else {
   dbConnection = mysql.createConnection({
