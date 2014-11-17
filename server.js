@@ -19,9 +19,10 @@ var connection = mysql.createConnection({
   password:''
 }); 
 
-//user-login/signup routes
+//user-login/signup/logout routes
 app.post('/user/login', user.login);
 app.post('/user/signup', user.signup);
+app.post('/user/logout', user.logout);
 
 //receivers route
 app.post('/receivers/getContacts', receivers.getContacts);
