@@ -53,8 +53,8 @@ module.exports.login = function(req, res){
 };
 
 module.exports.signup = function(req, res){
-  //receive username, password, phone and email 
-  //check if the username, phone and/or email already exist
+  //receive username, password, and email 
+  //check if the username, and/or email already exist
   //if so, send error back
   //if no, hash the given password and save the info in users table
   //get userId from the users table
@@ -62,12 +62,9 @@ module.exports.signup = function(req, res){
   //save the token
 	var username = req.body.username;
   var password = req.body.password;
-  // var phone = req.body.phone;
-  var phone = 1234567890;
-  // var email = req.body.email;
-  var email = 'satoko@gmail.com';
+  var email = req.body.email;
 
-  checkIfDataExist(username, phone, email, function(error, rows){
+  checkIfDataExist(username, email, function(error, rows){
   	if(error){ 
   		console.error(error);
   		res.send({'error': 'There was an internal error.'});
@@ -78,7 +75,7 @@ module.exports.signup = function(req, res){
   		hashPassword(password, function(hash){
   			// save the user data including the hash
   			console.log('hashed password', hash);
-  			saveUser(username, hash, phone, email, function(error){
+  			saveUser(username, hash, email, function(error){
   				if(error){
   					console.error(error);
   					res.send(error);
@@ -87,6 +84,7 @@ module.exports.signup = function(req, res){
   					console.log('saved the user');
   					getUserId(username, function(error, rows){
   						if(error){ res.send( { 'error':'could retrieve the user information.'} ) }
+              console.log('got userId', rows)  
   						var userId = rows[0].userId;
   					  //make token and send it back to user
 	  					createToken(function(token){
@@ -147,8 +145,8 @@ var removeToken = function(userId, callback){
   });
 };
 
-var checkIfDataExist = function(username, phone, email, callback){
-	dbConnection.query("SELECT userId FROM users WHERE username = '" + username + "' or phone = '" + phone + "' or email = '" + email + "';", callback);
+var checkIfDataExist = function(username, email, callback){
+	dbConnection.query("SELECT userId FROM users WHERE username = '" + username + "' or email = '" + email + "';", callback);
 };
 
 var hashPassword = function(password, callback){
@@ -161,8 +159,8 @@ var hashPassword = function(password, callback){
 	});
 };
 
-var saveUser = function(username, hash, phone, email, callback){
-	dbConnection.query("INSERT into users (username, password, phone, email) values ('" + username + "', '" + hash + "', '" + phone + "', '" + email + "');", callback);
+var saveUser = function(username, hash, email, callback){
+	dbConnection.query("INSERT into users (username, password, email) values ('" + username + "', '" + hash + "', '" + email + "');", callback);
 };
 
 var getUserId = function(username, callback){
