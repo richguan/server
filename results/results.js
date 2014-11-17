@@ -6,9 +6,9 @@ var mysql = require('mysql')
 module.exports.getResults = function(request, response){
   //*** still need to check if userId gets accessed ***
   var userId = request.body.userId;
-  var userId = 10
-  console.log(request, "REQUEST")
-  console.log(response, "what is the response in getResults")
+  // var userId = 10
+  // console.log(request, "REQUEST")
+  // console.log(response, "what is the response in getResults")
   //Query used to access mySQL tables
   var query = 'select contents.userid, users.username, contents.topic, contents.yes, contents.no, pictures.data from contents join users on contents.userId = users.userId and users.userId='+ userId + ' join pictures on contents.pictureId = pictures.pictureId';
   
@@ -34,7 +34,7 @@ module.exports.getResults = function(request, response){
 //To test if the server grabs the correct things from the database
 /* 
 
-Expect this on client end: 
+Expect this on client end: - expect response.send to show this
 [{
     topic: 'string',
     picture: some kind of data for pictures,
@@ -54,6 +54,7 @@ Retrieving:
 
 'select contents.userid, users.username, contents.topic, contents.yes, contents.no, pictures.data from contents join users on contents.userId = users.userId and users.userId='+ userId + ' join pictures on contents.pictureId = pictures.pictureId';
 
-
-
 */
+
+
+

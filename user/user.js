@@ -97,6 +97,13 @@ module.exports.signup = function(req, res){
 
 };
 
+//Logout function
+module.exports.logout = function(request, response){
+  var userId = request.body.userId;
+  //removes the token from the user table in the database
+  removeToken(userId);
+};
+
 //==============HEALPER FUNCTIONS=====================
 
 var findPassword = function(username, callback){
@@ -114,6 +121,16 @@ var saveToken = function(userId, token){
 	console.log('saving token...')
   dbConnection.query("UPDATE users SET token = '" + token + "' WHERE userId = '" + userId +"';", function(error) {
     if(error){	console.error(error); }
+  });
+};
+
+var removeToken = function(userId, callback){
+  console.log('removing token...')
+  dbConnection.query("UPDATE users SET token = '" + null + "' WHERE userId ='" + userId + "';", function(error){
+    var token = ''
+    if(error){
+      console.log('Removing token error: ', error);
+    }
   });
 };
 
