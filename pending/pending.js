@@ -9,6 +9,11 @@ module.exports.getPending = function(req, res){
   getPendingConents(userId, res);
 };
 
+module.exports.countPending = function(req, res){
+  var userId = req.body.userId;
+  countPendingConents(userId, res);
+}
+
 module.exports.sendVote = function(req, res){
   var userId = req.body.userId;
   var contentId = req.body.contentId;
@@ -39,6 +44,18 @@ var getPendingConents = function(userId, res){
       res.send(error);
     }else{
       data.contents = rows;
+      res.send(data);
+    }
+  });
+};
+
+var countPendingConents = function(userId, res){
+  dbConnection.query("SELECT contentId FROM receivers WHERE receiversId = '" + userId + "';", function(error, rows) {
+  var data = { count: 0 };
+    if(error){
+      res.send(error);
+    }else{
+      data.count = rows.length;
       res.send(data);
     }
   });
