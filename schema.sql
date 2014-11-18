@@ -16,7 +16,6 @@ DROP TABLE IF EXISTS contacts;
 CREATE TABLE contacts (
   userId INTEGER NULL DEFAULT NULL,
   friendId INTEGER NULL DEFAULT NULL,
-  PRIMARY KEY (userId)
 );
 
 DROP TABLE IF EXISTS pictures;
@@ -45,5 +44,4 @@ DROP TABLE IF EXISTS receivers;
 CREATE TABLE receivers (
   contentId INTEGER NULL DEFAULT NULL,
   receiversId INTEGER NULL DEFAULT NULL,
-  PRIMARY KEY (contentId)
 );

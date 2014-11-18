@@ -2,22 +2,15 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mysql = require('mysql');
 var user = require('./user/user.js');
-var receivers = require('./receivers/receivers.js'); 
+var receivers = require('./receivers/receiverLogic.js');
 var pending = require('./pending/pending.js');
 var results = require('./results/results.js');
 
 var app = express();
 
-app.use(express.static(__dirname + '/app'));
+app.use(express.static(__dirname + '/www'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-// connect to mysql database
-var connection = mysql.createConnection({
-	host: '',
-  user: '',
-  password:''
-}); 
 
 //user-login/signup/logout routes
 app.post('/user/login', user.login);
