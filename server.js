@@ -23,7 +23,8 @@ app.post('/receivers/getContacts', receivers.getContacts);
 app.post('/receivers/sendContent', receivers.sendContent);
 
 //pending route
-app.get('/pending/getPending', pending.getPending);
+app.post('/pending/getPending', pending.getPending);
+app.post('/pending/countPending', pending.countPending);
 app.post('/pending/sendVote', pending.sendVote);
 
 //results route
