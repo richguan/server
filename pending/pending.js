@@ -6,12 +6,12 @@ module.exports.getPending = function(req, res){
   //get contents data from contents table with contentId;
   //get pictureData from pictures table with pictureId;
   //get username from users table with userId;
-  getPendingConents(userId, res);
+  getPendingContents(userId, res);
 };
 
 module.exports.countPending = function(req, res){
   var userId = req.body.userId;
-  countPendingConents(userId, res);
+  countPendingContents(userId, res);
 }
 
 module.exports.sendVote = function(req, res){
@@ -37,7 +37,7 @@ module.exports.sendVote = function(req, res){
 
 // ===================HELPER FUNCTIONS=======================
 
-var getPendingConents = function(userId, res){
+var getPendingContents = function(userId, res){
   dbConnection.query("SELECT p.data, c.topic, u.username, c.contentId FROM receivers r JOIN contents c on r.contentID = c. contentID join pictures p on c.pictureID = p.pictureID join users u on c.userId = u.userId WHERE receiversId = '" + userId + "';", function(error, rows) {
   var data = { contents: [] };
     if(error){
@@ -49,7 +49,7 @@ var getPendingConents = function(userId, res){
   });
 };
 
-var countPendingConents = function(userId, res){
+var countPendingContents = function(userId, res){
   dbConnection.query("SELECT contentId FROM receivers WHERE receiversId = '" + userId + "';", function(error, rows) {
   var data = { count: 0 };
     if(error){
