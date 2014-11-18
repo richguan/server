@@ -56,6 +56,7 @@ var countPendingConents = function(userId, res){
       res.send(error);
     }else{
       data.count = rows.length;
+      console.log(data)
       res.send(data);
     }
   });
