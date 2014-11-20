@@ -45,3 +45,10 @@ CREATE TABLE receivers (
   contentId INTEGER NULL DEFAULT NULL,
   receiversId INTEGER NULL DEFAULT NULL
 );
+
+DROP TABLE IF EXISTS friendRequests;    
+
+CREATE TABLE friendRequests (
+  requesterId INTEGER NULL DEFAULT NULL,
+  confirmerId INTEGER NULL DEFAULT NULL
+);
