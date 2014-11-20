@@ -8,13 +8,12 @@ module.exports.getResults = function(req, res){
   // console.log(req, "REQUEST")
   // console.log(response, "what is the response in getResults")
   //Query used to access mySQL tables
-  console.log('userId ',userId);
+  console.log('userId ', userId);
   var query = 'select contents.userid, users.username, contents.topic, contents.yes, contents.no, pictures.data from contents join users on contents.userId = users.userId and users.userId='+ userId + ' join pictures on contents.pictureId = pictures.pictureId';
   
   dbConnection.query(query, function(error, data){
-    console.log('data ', data);
-    if(error){
-      console.log("Could not get results from db because: ", error);
+    if (error){
+      // console.log("Could not get results from db because: ", error);
     } else {
       res.send(data);
     }
