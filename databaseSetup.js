@@ -11,6 +11,11 @@ if (process.env.NODE_ENV === 'production') {
   });
 } else {
   dbConnection = mysql.createConnection({
+    // host: "localhost",
+    // user: "team",
+    // password: "agate",
+    // database: "yesno"
+
     user: "root",
     password: "",
     database: "test"
