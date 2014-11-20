@@ -28,7 +28,7 @@ app.post('/pending/countPending', pending.countPending);
 app.post('/pending/sendVote', pending.sendVote);
 
 //results route
-app.get('/results/getResults', results.getResults);
+app.post('/results/getResults', results.getResults);
 
 //server listen
 app.listen(process.env.PORT || '8080');
