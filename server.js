@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mysql = require('mysql');
 var user = require('./user/user.js');
+var user = require('./friends/friends.js');
 var receivers = require('./receivers/receiverLogic.js');
 var pending = require('./pending/pending.js');
 var results = require('./results/results.js');
@@ -17,6 +18,11 @@ app.use(bodyParser.json());
 app.post('/user/login', user.login);
 app.post('/user/signup', user.signup);
 app.post('/user/logout', user.logout);
+
+//friends route
+app.post('/friends/checkRequest', friends.checkRequest);
+app.post('/friends/addFriend', friends.addFriend);
+app.post('/friends/confirmFriend', friends.confirmFriend);
 
 //receivers route
 app.post('/receivers/getContacts', receivers.getContacts);
