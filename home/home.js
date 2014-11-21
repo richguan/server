@@ -1,6 +1,5 @@
 var dbConnection = require('../databaseSetup.js');
 
-
 //checks if the user has received any friend requests and any contents to vote.
 module.exports.checkUpdates = function(req, res){
 
@@ -10,12 +9,15 @@ module.exports.checkUpdates = function(req, res){
   //prepare the data object to send back with the properties.
   var data = {
     friendRequestCount: undefined,
-    pendingCount: undefined
+    pendingCount: undefined,
+    resultCompleteCount: undefined
   };
 
   //define the mysql query to use
   var countFriendRequestQuery = "SELECT * FROM friendRequests WHERE confirmerId = ?";
   var countPendingQuery = "SELECT contentId FROM receivers WHERE receiversId = ?";
+  var checkStatusQuery = "SELECT s.contentId, s.complete_notice FROM status s JOIN contents c on s.contentId = c.contentId WHERE userId = ?";
+  var changeStatusQuery = "UPDATE status SET complete_notice = 'sent' where contentId = ?";
 
   //first, check friendRequests database to check if there is any friend requests 
   dbConnection.query(countFriendRequestQuery, userId, function(error, rows){
@@ -32,8 +34,29 @@ module.exports.checkUpdates = function(req, res){
         }else{
           //store the number of the pending contents in the data object
           data.pendingCount = rows.length;
-          //send back the data to client
-          res.send(data);
+          //third check status database to check if there is any voting completed contents 
+          dbConnection.query(checkStatusQuery, userId, function(error, rows){
+            if(error){
+              //if there is any error, send back the friend request count and pending count back.
+              res.send(data);
+            }else{
+              console.log('get the contentId and complete_notice', rows);
+              var readyCount = 0;
+              //check if there is any content with complete_notice as ready
+              for(var i = 0; i < rows.length; i++){
+                if(rows[i].complete_notice === 'ready'){
+                  //if it is ready, increase the readyCount
+                  readyCount++;
+                  //change the complete_notice to sent
+                  dbConnection.query(changeStatusQuery, rows[i].contentId);
+                }
+              }
+              //store the number of the pending contents in the data object
+              data.resultCompleteCount = readyCount;
+              //send back the data to client
+              res.send(data);
+            }
+          });
         }
       });
     }

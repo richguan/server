@@ -52,3 +52,13 @@ CREATE TABLE friendRequests (
   requesterId INTEGER NULL DEFAULT NULL,
   confirmerId INTEGER NULL DEFAULT NULL
 );
+
+DROP TABLE IF EXISTS status;    
+
+CREATE TABLE status (
+  contentId INTEGER NULL DEFAULT NULL,
+  receiver_count INTEGER NULL DEFAULT 0,
+  vote_count INTEGER NULL DEFAULT 0,
+  complete_notice VARCHAR(10) NULL DEFAULT NULL,
+  PRIMARY KEY (contentId)
+);
