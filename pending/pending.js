@@ -81,8 +81,8 @@ var saveStatus = function(contentId, callback){
 var checkStatus = function(contentId){
   var checkQuery = "SELECT receiver_count, vote_count FROM status WHERE contentId = ?";
   var updateQuery = "UPDATE status SET complete_notice = 'ready' WHERE contentId = ?";
+  
   dbConnection.query(checkQuery, contentId, function(error, rows) {
-    console.log('checking the status', error, rows[0])
     if(error){ console.error(error); }
     //check to see if the votes is completed by checking receiver_count and vote_count
     if(rows[0].receiver_count === rows[0].vote_count){
