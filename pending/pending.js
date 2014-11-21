@@ -28,6 +28,9 @@ module.exports.sendVote = function(req, res){
 
   //delete connection in receivers table
   deleteFromReceivers(userId, contentId);
+
+  //increase the vote_count in status table and checkStatus as a callback
+  saveStatus(contentId, checkStatus);
 };
 
 // ===================HELPER FUNCTIONS=======================
@@ -65,4 +68,29 @@ var deleteFromReceivers = function(userId, contentId){
   dbConnection.query("DELETE FROM receivers WHERE receiversId = '" + userId + "' and contentId = '" + contentId + "';", function(error) {
     if(error){ console.error(error); }
   });
-};  
+};
+
+var saveStatus = function(contentId, callback){
+  var query = "UPDATE status SET vote_count = vote_count+1 WHERE contentId = ?";
+  dbConnection.query(query, contentId, function(error) {
+    if(error){ console.error(error); }
+    callback(contentId);
+  });
+}
+
+var checkStatus = function(contentId){
+  var checkQuery = "SELECT receiver_count, vote_count FROM status WHERE contentId = ?";
+  var updateQuery = "UPDATE status SET complete_notice = 'ready' WHERE contentId = ?";
+  
+  dbConnection.query(checkQuery, contentId, function(error, rows) {
+    if(error){ console.error(error); }
+    //check to see if the votes is completed by checking receiver_count and vote_count
+    if(rows[0].receiver_count === rows[0].vote_count){
+      //if yes, update the complete_notice to ready in status table
+      dbConnection.query(updateQuery, contentId, function(error) {
+        if(error){ console.error(error); }
+      });
+    }
+  });
+}
+

@@ -42,16 +42,17 @@ module.exports = {
   },
 
   sendContent: function(req, res, next){
+
     //get content from POST request
     var userId = req.body.content.userId;
     var topic = req.body.content.topic;
     var picture = req.body.content.picture;
     var receivers = req.body.receivers;
 
-
     //define the mysql query to use
     var postPicDataQuery = 'INSERT INTO pictures (data) VALUES (?)';
     var postContentQuery = 'INSERT INTO contents (topic, userId, pictureId) VALUES (?, ?, ?)';
+    var saveStatusQuery = 'INSERT INTO status (contentId, receiver_count) VALUES (?, ?)';
     var selectReceiversQuery = 'INSERT INTO receivers (contentId, receiversId) VALUES';
 
     //start mysql transaction for adding new content
@@ -80,29 +81,39 @@ module.exports = {
             var contentId = result.insertId;
           }
 
-          //finish composing the query to insert all the receivers
-          for (var i=0; i<receivers.length; i++){
-            var escapedReceiver = mysql.escape(receivers[i]);
-            selectReceiversQuery += '(' + contentId + ', ' + escapedReceiver + '),';
-          }
-          selectReceiversQuery = selectReceiversQuery.slice(0,-1);
-          
-          //add all the receivers for the content to db as part of transaction
-          mysql.query(selectReceiversQuery, function(err, result) {
+          // insert contentId and receiver_count into status table
+          mysql.query(saveStatusQuery, [contentId, receivers.length], function(err){
             if (err) { 
               mysql.rollback(function() {
-                console.log(err, 'RECEIVERS');
+                console.log(err, 'STATUS');
               });
             }
 
-            //commit the whole transaction
-            mysql.commit(function(err) {
+            //finish composing the query to insert all the receivers
+            for (var i=0; i<receivers.length; i++){
+              var escapedReceiver = mysql.escape(receivers[i]);
+              selectReceiversQuery += '(' + contentId + ', ' + escapedReceiver + '),';
+            }
+            selectReceiversQuery = selectReceiversQuery.slice(0,-1);
+            
+            //add all the receivers for the content to db as part of transaction
+            mysql.query(selectReceiversQuery, function(err, result) {
               if (err) { 
                 mysql.rollback(function() {
-                  console.log(err, 'COMMIT');
+                  console.log(err, 'RECEIVERS');
                 });
               }
+
+              //commit the whole transaction
+              mysql.commit(function(err) {
+                if (err) { 
+                  mysql.rollback(function() {
+                    console.log(err, 'COMMIT');
+                  });
+                }
+              });
             });
+          
           });
         });
       });
@@ -123,6 +134,4 @@ module.exports = {
     //   })
   }
 
-
-
-};
+  };
