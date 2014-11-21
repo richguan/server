@@ -40,7 +40,6 @@ module.exports.checkUpdates = function(req, res){
               //if there is any error, send back the friend request count and pending count back.
               res.send(data);
             }else{
-              console.log('get the contentId and complete_notice', rows);
               var readyCount = 0;
               //check if there is any content with complete_notice as ready
               for(var i = 0; i < rows.length; i++){
