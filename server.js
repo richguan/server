@@ -13,7 +13,7 @@ var app = express();
 // app.use(express.static(__dirname + '/www')); 
 // app.use(express.static(__dirname + '/app'));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "5mb" }));
 
 //user-login/signup/logout routes
 app.post('/user/login', user.login);
