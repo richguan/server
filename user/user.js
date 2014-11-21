@@ -1,4 +1,3 @@
-var jwt = require('jwt-simple');
 var bcrypt = require('bcrypt-nodejs');
 var dbConnection = require('../databaseSetup.js');
 var crypto = require('crypto');
