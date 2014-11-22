@@ -10,7 +10,11 @@ var results = require('./results/results.js');
 
 var app = express();
 
+<<<<<<< HEAD
 // app.use(express.static(__dirname + '/www')); 
+=======
+app.use(express.static(__dirname + '/www'));
+>>>>>>> (feat) can add friends, confirm and deny friend requests
 // app.use(express.static(__dirname + '/app'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ limit: "5mb" }));
@@ -24,8 +28,10 @@ app.post('/user/logout', user.logout);
 app.post('/home/checkUpdates', home.checkUpdates);
 
 // //friends route
-app.post('/friends/addFriend', friends.addFriend);
+app.post('/friends/checkRequest', friends.checkRequest);
+app.post('/friends/requestFriend', friends.requestFriend);
 app.post('/friends/confirmFriend', friends.confirmFriend);
+app.post('/friends/declineFriend', friends.declineFriend);
 
 //receivers route
 app.post('/receivers/getContacts', receivers.getContacts);

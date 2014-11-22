@@ -1,15 +1,6 @@
 //var Q = require('q');
 var mysql = require('../databaseSetup.js')
 
-// var Kitty = mongoose.model("Kitty");
-// var findKitties = Q.nbind(Kitty.find, Kitty);
-
-// findKitties({ cute: true }).done(function (theKitties) {
-
-// });
-
-// Q.ncall(fs.readFile, fs, "./data/seeds.json", "utf-8") 
-
 module.exports = {
   getContacts: function(req, res, next){
     //get userid from POST request
@@ -102,6 +93,8 @@ module.exports = {
                 mysql.rollback(function() {
                   console.log(err, 'RECEIVERS');
                 });
+              } else {
+                res.end()
               }
 
               //commit the whole transaction
