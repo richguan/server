@@ -24,8 +24,10 @@ app.post('/user/logout', user.logout);
 app.post('/home/checkUpdates', home.checkUpdates);
 
 // //friends route
-app.post('/friends/addFriend', friends.addFriend);
+app.post('/friends/checkRequest', friends.checkRequest);
+app.post('/friends/requestFriend', friends.requestFriend);
 app.post('/friends/confirmFriend', friends.confirmFriend);
+app.post('/friends/declineFriend', friends.declineFriend);
 
 //receivers route
 app.post('/receivers/getContacts', receivers.getContacts);

@@ -9,13 +9,15 @@ CREATE TABLE users (
   salt VARCHAR(60) NULL DEFAULT NULL,
   token VARCHAR(100) NULL DEFAULT NULL,
   PRIMARY KEY (userId)
+  UNIQUE KEY (username, phone, email)
 );
 
 DROP TABLE IF EXISTS contacts;
 
 CREATE TABLE contacts (
   userId INTEGER NULL DEFAULT NULL,
-  friendId INTEGER NULL DEFAULT NULL
+  friendId INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (userId, friendId)
 );
 
 DROP TABLE IF EXISTS pictures;
@@ -43,14 +45,16 @@ DROP TABLE IF EXISTS receivers;
 
 CREATE TABLE receivers (
   contentId INTEGER NULL DEFAULT NULL,
-  receiversId INTEGER NULL DEFAULT NULL
+  receiversId INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (contentId, receiversId)
 );
 
 DROP TABLE IF EXISTS friendRequests;    
 
 CREATE TABLE friendRequests (
   requesterId INTEGER NULL DEFAULT NULL,
-  confirmerId INTEGER NULL DEFAULT NULL
+  confirmerId INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (requesterId, confirmerId)
 );
 
 DROP TABLE IF EXISTS status;    
