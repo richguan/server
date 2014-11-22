@@ -10,11 +10,7 @@ var results = require('./results/results.js');
 
 var app = express();
 
-<<<<<<< HEAD
 // app.use(express.static(__dirname + '/www')); 
-=======
-app.use(express.static(__dirname + '/www'));
->>>>>>> (feat) can add friends, confirm and deny friend requests
 // app.use(express.static(__dirname + '/app'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ limit: "5mb" }));
