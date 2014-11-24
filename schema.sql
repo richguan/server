@@ -8,7 +8,7 @@ CREATE TABLE users (
   email VARCHAR(30) NULL DEFAULT NULL,
   salt VARCHAR(60) NULL DEFAULT NULL,
   token VARCHAR(100) NULL DEFAULT NULL,
-  PRIMARY KEY (userId)
+  PRIMARY KEY (userId),
   UNIQUE KEY (username, phone, email)
 );
 
